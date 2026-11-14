@@ -53,6 +53,24 @@ final class SyncIntegrationTest extends TestCase
         Container::setInstance(null);
     }
 
+    public function test_initial_migration_persists_preferred_disks_and_recreates_configuration(): void
+    {
+        $configuration = FileConfiguration::create(['allowed_extensions' => ['jpg']]);
+        self::assertNull($configuration->fresh()->preferred_disks);
+        $configuration->update(['preferred_disks' => ['archive', 'public']]);
+        self::assertSame(['archive', 'public'], $configuration->fresh()->preferred_disks);
+
+        $migration = require dirname(__DIR__).'/database/migrations/2026_09_27_101909_create_file_tables.php';
+        $migration->down();
+        self::assertFalse($this->db->getConnection()->getSchemaBuilder()->hasTable('file_configurations'));
+        config(['files.tables.configuration' => 'custom_file_settings']);
+        $migration->up();
+        $configuration = FileConfiguration::create(['allowed_extensions' => [], 'preferred_disks' => ['archive']]);
+        self::assertSame(['archive'], $configuration->fresh()->preferred_disks);
+        $migration->down();
+        self::assertFalse($this->db->getConnection()->getSchemaBuilder()->hasTable('custom_file_settings'));
+    }
+
     public static function copyCases(): array
     {
         return [[false], [true]];

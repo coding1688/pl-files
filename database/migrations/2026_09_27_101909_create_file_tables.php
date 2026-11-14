@@ -57,6 +57,7 @@ return new class extends Migration
             $table->string('default_disk', 32)->nullable();
             $table->unsignedInteger('max_upload_mb')->default(32);
             $table->json('allowed_extensions');
+            $table->json('preferred_disks')->nullable();
             $table->timestamps();
         });
 

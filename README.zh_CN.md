@@ -4,6 +4,12 @@
 
 [Moonsea](https://moonsea.dev) · [GitHub](https://github.com/coding1688/pl-files)
 
+## 0.5.0 版本基线
+
+三个 Moonsea 包统一从 `v0.5.0` 重新开始。原标签和 GitHub Releases 已清理，提交历史保留。请显式更新 Composer 版本约束和锁文件。这是新的版本基线，不是从已移除版本自动升级。
+
+files 初始迁移现在直接创建可空 JSON 字段 `preferred_disks`，独立补列迁移已移除。现有数据库不会重跑初始迁移。使用此基线前，请检查配置的数据表：缺少该列时通过宿主迁移补齐；已有该列则保留数据。不要对需要保留数据的数据库执行 `migrate:fresh`。历史迁移记录可能仍引用已移除文件，切换前请检查回滚方案。
+
 ## 功能
 
 适用于 Laravel 的文件上传、引用追踪、可配置存储账号与校验复制。

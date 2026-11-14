@@ -4,6 +4,12 @@
 
 [Moonsea](https://moonsea.dev) · [GitHub](https://github.com/coding1688/pl-files)
 
+## 0.5.0 版本基準
+
+三個 Moonsea 套件統一從 `v0.5.0` 重新開始。原標籤及 GitHub Releases 已清理，提交歷史保留。請明確更新 Composer 版本限制及鎖定檔。這是新的版本基準，不是從已移除版本自動升級。
+
+files 初始遷移現在直接建立可為空的 JSON 欄位 `preferred_disks`，獨立新增欄位遷移已移除。現有資料庫不會重新執行初始遷移。使用此基準前，請檢查設定的資料表：缺少該欄位時透過宿主遷移補齊；已有欄位則保留資料。不要對需要保留資料的資料庫執行 `migrate:fresh`。歷史遷移記錄可能仍引用已移除檔案，切換前請檢查回復方案。
+
 ## 功能
 
 適用於 Laravel 的檔案上傳、引用追蹤、可設定儲存帳號與驗證複寫。

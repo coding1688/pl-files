@@ -6,6 +6,12 @@ File uploads, reference tracking, configurable storage accounts and verified rep
 
 [Moonsea](https://moonsea.dev) · [Source](https://github.com/coding1688/pl-files) · [Issues](https://github.com/coding1688/pl-files/issues) · [Getting started](GETTING_STARTED.md)
 
+## Version 0.5.0 baseline
+
+The three Moonsea packages restart at `v0.5.0`. Earlier tags and GitHub Releases have been removed; commit history remains. Update Composer version constraints and lock files explicitly. This is a new version baseline, not an automatic upgrade from the removed releases.
+
+The initial files migration now creates nullable JSON `preferred_disks`; the separate add-column migration has been removed. Existing databases do not rerun the initial migration. Before using this baseline, check the configured configuration table: if the column is missing, add it through a host migration; if present, keep its data. Do not run `migrate:fresh` on a database containing data you need. Historical migration records may refer to the removed file, so review rollback plans before switching versions.
+
 ## What is included
 
 - A low-level storage API returning normalized file metadata.
